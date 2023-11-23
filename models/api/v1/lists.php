@@ -1,14 +1,11 @@
 <?php
-/*
-            ____                  _     _
-           / ___|_   _  __ _  ___| |__ (_)
-          | |  _| | | |/ _` |/ __| '_ \| |
-          | |_| | |_| | (_| | (__| | | | |
-           \____|\__,_|\__,_|\___|_| |_|_|
-Copyright (c) 2014  Díaz  Víctor  aka  (Máster Vitronic)
-Copyright (c) 2018  Díaz  Víctor  aka  (Máster Vitronic)
-<vitronic2@gmail.com>   <mastervitronic@vitronic.com.ve>
-*/
+/**!
+ * @package   ReceiptAPI
+ * @filename  lists.php
+ * @version   1.0
+ * @autor     Díaz Urbaneja Víctor Eduardo Diex <diazvictor@tutamail.com>
+ * @date      22.11.2023 02:33:35 -04
+ */
 
 class api_v1_lists_model extends model {
 
@@ -19,11 +16,30 @@ class api_v1_lists_model extends model {
     $this->borrow('notFound')->show();
   }
 
-  public function get($page = null) {
+  public function get($page = 1) {
     $and = ' ';
     if (intval($_SESSION['id_profile']) == 2) {
+      // ESTO ES COMPRADOR
+      // @TODO: Como se cuales son mis recibos ?
       $and = '  ';
     }
+
+    $limit = 5;
+    $this->sql = 'select '
+                  .'  count(id_recibo) as total '
+                  .'from apirec_recibo where true ' . $and;
+    $records = $this->db->execute($this->sql)[0]['total'];
+    $offset = ($limit * ($page - 1));
+    $pages = ceil ($records / $limit);
+
+    $pagination = [
+      "total_records" => intval($records),
+      "total_pages"   => $pages,
+      "current_page"  => intval($page),
+      "next_page"     => ($records == 0) ? 1 : ($page + 1),
+      "prev_page"     => ($records == 0) ? 1 : ($page - 1)
+    ];
+
     $this->sql = 'select '
                 .'  apirec_recibo.id_recibo, '
                 .'  apirec_recibo.rif_agente, '
@@ -48,19 +64,19 @@ class api_v1_lists_model extends model {
                 .'    apirec_recibo_adjunto.id_recibo=apirec_recibo.id_recibo '
                 .'  ) '
                 .' where true ' .  $and
-                .'order by apirec_recibo.id_recibo desc ';
-    
-    /*ejecuto la consulta*/
-    if (($results = $this->db->execute($this->sql,"")) === false) {
+                .'order by apirec_recibo.cod_recibo desc limit %d offset %d';
+
+    if (($results = $this->db->execute($this->sql, "", $limit, $offset)) === false) {
       $this->notFound();
       return false;
     }
+
     /*retorno la data*/
     header('Content-Type: application/json; charset=utf-8');
-    // print( json_encode($results) );
     print( json_encode([
-      'ok'        => true,
-      'data'      => $results
+      'ok'          => (intval($records) > 0),
+      'data'        => $results,
+      'pagination'  => $pagination
     ]));
   }
 

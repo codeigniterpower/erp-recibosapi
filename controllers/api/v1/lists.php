@@ -1,14 +1,11 @@
 <?php
-/*
-            ____                  _     _
-           / ___|_   _  __ _  ___| |__ (_)
-          | |  _| | | |/ _` |/ __| '_ \| |
-          | |_| | |_| | (_| | (__| | | | |
-           \____|\__,_|\__,_|\___|_| |_|_|
-Copyright (c) 2014  Díaz  Víctor  aka  (Máster Vitronic)
-Copyright (c) 2018  Díaz  Víctor  aka  (Máster Vitronic)
-<vitronic2@gmail.com>   <mastervitronic@vitronic.com.ve>
-*/
+/**!
+ * @package   ReceiptAPI
+ * @filename  lists.php
+ * @version   1.0
+ * @autor     Díaz Urbaneja Víctor Eduardo Diex <diazvictor@tutamail.com>
+ * @date      22.11.2023 02:33:35 -04
+ */
 
 class api_v1_lists_controller extends controller {
 
@@ -18,15 +15,14 @@ class api_v1_lists_controller extends controller {
     $parameters = ($this->router->parameters) ? $this->router->parameters : false;
 
     if (
-      $parameters[0] and $parameters[0] == 'pages' and
+      $parameters[0] and $parameters[0] == 'page' and
       valid_input($parameters[1], VALIDATE_NUMBERS, VALIDATE_NONEMPTY)
     ) {
-      $this->model->get($parameters[2]);
+      $this->model->get($parameters[1]);
       return;
     }
 
     $this->model->get();
-    // $this->model->notFound();
   }
 
 }
