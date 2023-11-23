@@ -16,6 +16,38 @@ class api_v1_upload_model extends model {
     $this->borrow('notFound')->show();
   }
 
+  /**
+   * Crea el directorio en el cloud
+   * @return string
+   */
+  private function create_cloud_dir() {
+    $dir = sprintf('%scloud/%s/%s/%s/', ROOT, date('Y'),date('m'),date('d'));
+    mkdir($dir, 0777, true);
+    return $dir ;
+  }
+
+  /**
+   * Decodifica un base64 y lo guarda en el filesystem
+  */
+  private function save_file($b64,$filepath) {
+    $ifp = fopen( $filepath, 'wb' ); 
+    $data = explode(',', $b64);
+    if (isset($data[1])){
+      fwrite( $ifp, base64_decode($data[1]));
+    } else {
+      fwrite( $ifp, base64_decode($data[0]));
+    }
+    fclose($ifp);
+  }
+
+  /**
+   * Crea el ID loco de PICCORO
+   * @return string LOCO
+   */
+  private function mkid() {
+    return date('YmdHis');
+  }
+
   private function save_ok($post) {
     $result = true; /*esto es true a menos que algo salga mal*/
     $validator   = new validator(); /*inicializo la clase de validacion*/
@@ -127,7 +159,7 @@ class api_v1_upload_model extends model {
       }
     }
 
-    if ($this->save_ok($post) === false || $this->err){
+    if ($this->save_ok($post) === false || $this->err) {
       print(json_encode([
         'ok'        => false,
         'msg'       => $this->err,
@@ -168,7 +200,7 @@ class api_v1_upload_model extends model {
         return false;
       }
     } else {
-      $post["id_recibo"] = mkid();
+      $post["id_recibo"] = $this->mkid();
       /*hago el insert*/
       if ($this->db->insert("apirec_recibo", $post, $keys) === false) {
         $this->db->query("rollback");
@@ -179,10 +211,9 @@ class api_v1_upload_model extends model {
       $id_recibo = $post["id_recibo"];
     }
 
-
     if (!empty($post["adjunto"])) {
       $this->db->delete('apirec_recibo_adjunto', 'id_recibo', $id_recibo);
-      $updir = create_cloud_dir();
+      $updir = $this->create_cloud_dir();
       $filepath = $updir .  $id_recibo;
 
       $keys = ["id_recibo", "adjunto", "ruta"]; // @TODO: No se que son los *flags*
@@ -198,7 +229,7 @@ class api_v1_upload_model extends model {
         return false;
       }
 
-      save_file($post["adjunto"], $filepath);
+      $this->save_file($post["adjunto"], $filepath);
     }
 
     /*finalmente hago el commit y retorno*/
