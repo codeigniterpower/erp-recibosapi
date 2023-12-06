@@ -17,7 +17,7 @@ class api_v1_search_model extends model {
   }
 
   public function get($search, $page = 1) {
-    $where = ' where '
+    $where = ' where 1=1  and '
               .'(' /* this filter is bad, the or and and are mutually exclusive */
               .'  apirec_recibo.id_recibo like %s or '
               .'  apirec_recibo.rif_agente like %s or '

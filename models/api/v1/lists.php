@@ -28,7 +28,7 @@ class api_v1_lists_model extends model {
     $limit = 5;
     $this->sql = 'select '
                   .'  count(id_recibo) as total '
-                  .'from apirec_recibo where true ' . $and;
+                  .'from apirec_recibo where 1=1 ' . $and;
     $records = intval($this->db->execute($this->sql)[0]['total']);
     $offset = ($limit * ($page - 1));
     $pages = ceil ($records / $limit);
@@ -63,7 +63,7 @@ class api_v1_lists_model extends model {
                 .'  inner join apirec_recibo_adjunto on ( '
                 .'    apirec_recibo_adjunto.id_recibo=apirec_recibo.id_recibo '
                 .'  ) '
-                .' where true ' .  $and
+                .' where 1=1 ' .  $and
                 .'order by apirec_recibo.cod_recibo desc limit %d offset %d';
 
     if (($results = $this->db->execute($this->sql, "", $limit, $offset)) === false) {
