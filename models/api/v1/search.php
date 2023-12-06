@@ -41,14 +41,15 @@ class api_v1_search_model extends model {
                   .'  count(id_recibo) as total '
                   .'from apirec_recibo '. $where . $and;
 
-    $records = $this->db->execute($this->sql,$values)[0]['total'];
+    $page = intval($page);
+    $records = intval($this->db->execute($this->sql,$values)[0]['total']);
     $offset = ($limit * ($page - 1));
     $pages = ceil ($records / $limit);
     $pagination = [
-      "total_records" => intval($records),
+      "total_records" => $records,
       "total_pages"   => $pages,
       "per_page"      => $limit,
-      "current_page"  => intval($page),
+      "current_page"  => $page,
       "next_page"     => ($records == 0) ? 1 : ($page + 1),
       "prev_page"     => ($records == 0) ? 1 : ($page - 1)
     ];
