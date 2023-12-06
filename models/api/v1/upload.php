@@ -41,8 +41,9 @@ class api_v1_upload_model extends model {
   }
 
   /**
-   * Crea el ID loco de PICCORO
-   * @return string LOCO
+   * Crea el ID loco de PICCORO posta no es loco.. con esto identificas varias cosas, fecha, donde cuando 
+   *    ah y de paso se ordena solo ya que nunca dara unnumero menor a menos este el sistema trampeado
+   * @return string YYYYMMDDHHmmss
    */
   private function mkid() {
     return date('YmdHis');
