@@ -18,6 +18,7 @@ class api_v1_search_model extends model {
 
   public function get($search, $page = 1) {
     $where = ' where '
+              .'(' /* this filter is bad, the or and and are mutually exclusive */
               .'  apirec_recibo.id_recibo like %s or '
               .'  apirec_recibo.rif_agente like %s or '
               .'  apirec_recibo.rif_sujeto like %s or '
@@ -26,7 +27,8 @@ class api_v1_search_model extends model {
               .'  apirec_recibo.num_control like %s or '
               .'  apirec_recibo.fecha_factura like %s or '
               .'  apirec_recibo.fecha_compra like %s or '
-              .'  apirec_recibo.tipo_recibo like %s ';
+              .'  apirec_recibo.tipo_recibo like %s '
+              .')';
     $and = ' ';
     if (intval($_SESSION['id_profile']) == 2) {
       // ESTO ES COMPRADOR
