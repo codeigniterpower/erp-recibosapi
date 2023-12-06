@@ -24,18 +24,18 @@ class api_v1_lists_model extends model {
       $and = '  ';
     }
 
+    $page = intval($page);
     $limit = 5;
     $this->sql = 'select '
                   .'  count(id_recibo) as total '
                   .'from apirec_recibo where true ' . $and;
-    $records = $this->db->execute($this->sql)[0]['total'];
+    $records = intval($this->db->execute($this->sql)[0]['total']);
     $offset = ($limit * ($page - 1));
     $pages = ceil ($records / $limit);
-
     $pagination = [
-      "total_records" => intval($records),
+      "total_records" => $records,
       "total_pages"   => $pages,
-      "current_page"  => intval($page),
+      "current_page"  => $page,
       "next_page"     => ($records == 0) ? 1 : ($page + 1),
       "prev_page"     => ($records == 0) ? 1 : ($page - 1)
     ];
