@@ -37,13 +37,18 @@ Para mas detalles leer [docs/README.md](docs/README.md)
 
 ## LICENSE
 
-The Luachi Framework is open-sourced software under the GPLv2 license. This is the php downstream part
+The Guachi Framework is open-source software under the MIT License, this downstream part is a reduced version for!
+Este minicore conteine partes del framework Banshee bajo la misma licencia.
+
+* (c) 2023 Dias Victor @diazvictor
 
 El proyecto receiptsapi es open source y free software bajo la licencia GPLv3 por lo que cualquier modificacion debe ser compartida.
 
 * (c) 2023 PICCORO Lenz MCKAY @mckaygerhard
 * (c) 2023 Dias Victor @diazvictor
 
-Las adiciones y la funcionalidad estan licenciadas tambien **CC-BY-SA-NC** Compartir igual sin derecho comercial a menos que se pida permiso, y con atribuciones de credito.
+Las adiciones y la funcionalidad estan licenciadas tambien **CC-BY-SA-NC** Compartir igual sin derecho comercial a menos que se pida permiso esten de acuerdo ambas partes, y con atribuciones de credito.
 
 * (c) 2023 PICCORO Lenz McKAY <mckaygerhard>
+* (c) 2023 Dias Victor @diazvictor
+
