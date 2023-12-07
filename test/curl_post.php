@@ -12,12 +12,10 @@ $fields = [
   "cod_recibo" =>  "0000022",
   "num_recibo" =>  "0000022",
   "num_control" => "0000022",
-  "fecha_factura" => "20231123",
+  "fecha_recibo" => "20231123",
   "fecha_compra" => "20231123",
-  "monto_imponible" => "1000.00",
+  "monto_recibo" => "1000.00",
   "monto_excento" => "0.00",
-  "monto_iva" => "160.00",
-  "tasa_iva" => "1.99",
   "tipo_recibo" => "factura",
   "adjunto" => base64_encode(file_get_contents('Voucher-1536x901.jpg'))
 ];

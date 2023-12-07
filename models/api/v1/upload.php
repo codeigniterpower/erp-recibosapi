@@ -58,11 +58,11 @@ class api_v1_upload_model extends model {
         'type'      => 'string',
         "required"  => true
       ],
-      'fecha_factura' => [
+      'fecha_recibo' => [
         'type'      => 'string',
         "required"  => true
       ],
-      'monto_imponible' => [
+      'monto_recibo' => [
         'type'      => 'float',
         "required"  => true
       ],
@@ -177,7 +177,7 @@ class api_v1_upload_model extends model {
       "cod_recibo",
       "num_recibo",
       "num_control",
-      "fecha_factura",
+      "fecha_recibo",
       "fecha_compra",
       "monto_imponible",
       "monto_excento",

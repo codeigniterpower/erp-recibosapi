@@ -14,7 +14,7 @@
 DROP TABLE IF EXISTS `apirec_recibo_adjunto` ;
 
 CREATE TABLE IF NOT EXISTS `apirec_recibo_adjunto` (
-  `adjunto_recibo_id` VARCHAR(80) NOT NULL COMMENT 'YYYYMMDDHHMMSS id de este adjunto',
+  `adjunto_cod_recibo` VARCHAR(80) NOT NULL COMMENT 'YYYYMMDDHHMMSS id de este adjunto cada entrada es un solo adjunto',
   `adjunto_recibo` BINARY NULL COMMENT 'adjunto escaneado pero guardado en db',
   `adjunto_recibo_ruta` VARCHAR(80) NULL COMMENT 'ruta absoluta del recibo.. separador de directorios es barra dividir',
   `sessionflag` VARCHAR(80) NULL DEFAULT NULL COMMENT 'YYYYMMDDhhmmss.entidad.usuario quien altero',
@@ -34,13 +34,12 @@ CREATE TABLE IF NOT EXISTS `apirec_recibo` (
   `num_control` VARCHAR(80) NULL,
   `fecha_recibo` VARCHAR(80) NULL DEFAULT NULL COMMENT 'YYYYMMDD del recibo en el momento de concretar la compra..  indicado en el documento',
   `fecha_compra` VARCHAR(80) NULL DEFAULT NULL COMMENT 'YYYYMMDD en el momento que se empezo la compra, fecha actual al crear el recibo',
-  `monto_imponible` DECIMAL(40,2) NULL DEFAULT NULL COMMENT 'base imponible o monto sin el iva permite 0',
-  `monto_excento` DECIMAL(40,2) NULL DEFAULT NULL COMMENT 'monto al cual el iva no se aplica y admite 0',
-  `monto_iva` DECIMAL(40,2) NULL DEFAULT '0.00' COMMENT 'monto del IVA o de la retencion si es ISLR',
+  `monto_recibo` DECIMAL(40,2) NULL DEFAULT NULL COMMENT 'monto total crudo de todo el recibo debe ser positivo',
+  `monto_excento` DECIMAL(40,2) NULL DEFAULT NULL COMMENT 'monto al cual ningun impuesto aplica y admite 0',
   `tipo_recibo` VARCHAR(80) NULL DEFAULT NULL COMMENT 'factura | nota',
-  `adjunto_recibo_id` VARCHAR(80) NOT NULL COMMENT 'id del adjunto escaneado ',
+  `adjunto_cod_recibo` VARCHAR(80) NOT NULL COMMENT 'id del adjunto escaneado cada entrada es un solo adjunto',
   `sessionflag` VARCHAR(80) NULL DEFAULT NULL COMMENT 'YYYYMMDDhhmmss.entidad.usuario quien altero',
-  `sessionficha` VARCHAR(80) NULL DEFAULT NULL COMMENT 'id del mismo adjunto pero si esta en db tambien',
+  `sessionficha` VARCHAR(80) NULL DEFAULT NULL COMMENT 'YYYYMMDDhhmmss.entidad.usuario quien lo creo',
   PRIMARY KEY (`cod_recibo`))
 COMMENT = 'tabla centralizada de registros de recibos';
 

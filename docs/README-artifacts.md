@@ -94,21 +94,18 @@ con una interfaz embebida minima sin administracion:
 
 ###### proceso etapa 2 desarrollo
 
-El sistema de resibos solo recive una peticion POST con el 
+El sistema de recibos solo recive una peticion POST con el 
 fomulario multiform los datos aqui y el adjunto.
 
-* 3 - COMPRADOR : inmediatamente cargar la factura al sistema sea por telefono o por pc, y llenar los datos
+* 3 - COMPRADOR : inmediatamente cargar el recibo al sistema sea por telefono o por pc, y llenar los datos
     * rif del agente de retencion o el rif del que compra o el que hace la compra
     * rif del sujeto retenido o rif de la razon social a la que compran (el rif del negocio al que hicieron la compra)
     * numero de factura OJO no es lo mismo que numero de control
     * numero de control: OJO si es ticket o no tiene usar el numero de la caja, o el numero al final en la linea MH
-    * fecha de la factura (no es lo mismo que fecha de entrega de factura ni fecha de realizacion de dicha compra)
+    * fecha de el recibo (no es lo mismo que fecha de entrega de factura ni fecha de realizacion de dicha compra)
     * fecha de la compra (ojo puede no ser la misma de la fecha de la factura), fecha de comra = fecha que se concreta o entrega dinero, el sistem automatico pone la del dia y el tipo la modifica hacia adelante
-    * base imponible (el monto de la compra, pero solo los que se les saca iva pero sin el iva, o el monto cantidad de objeto de retencion)
-    * base excento (el monto de la compra pero solo los que no se les aplica iva, total, o el monto si derecho a credito fiscal)
-    * monto del iva (el iva correspondinte, ojo no simepre es 16% puede variar, es solo en bolivares asi en el pago esten dolares incluidos, se les saca convertido en bolivares, llamado impuesto iva)
-    * porcentaje iva (este puede variasr, si es productos de transporte no es 16 por ejemplo)
-    * monto total (es el del imponible + excento+ mas el del iva , es el total de compras)
+    * base monto (el monto de la compra, monto total gastado incluyendo el impestos todos lso aplicados)
+    * base excento (el monto de la compra pero solo los montos que no tiene aplicado ningun impuesto en el recibo)
     * **flag o selector** si es salida de dinero para pagar un **servicio** (pagos) o si es salida de dinero para **articulo** adquiridos (compra)
 
 #### ETAPA 2 desarrollo
@@ -226,10 +223,10 @@ Descripción: El actor ( no importa cual) carga un documento.
     - `rif_sujeto` : OPCIONAL : rif del vendedor
     - `num_recibo` : OPCIONAL/REQUERIDO : si hay rif de vendedor, es requerido, es el numero de factura
     - `num_control` : OPCIONAL/REQUERIDO : si hay rif de vendedor, requerido, es numero caja o numero linea MH
-    - `fecha_factura` : REQUERIDO : fecha de la factura/nota indicada en el recibo
+    - `fecha_recibo` : REQUERIDO : fecha de la factura/nota indicada en el recibo
     - `fecha_compra` : OPCIONAL : se pone a la fecha actual (de no venir) o maximo DIASCARGA atras
-    - `monto_factura` : REQUERIDO : base imponible monto total toda la factura, solo positivos sin cero
-    - `monto_excento` : REQUERIDO : monto de la compra que no se le aplica iva, solo positivos incluye cero
+    - `monto_recibo` : REQUERIDO : base imponible monto total todo el recibo, solo positivos sin cero
+    - `monto_excento` : REQUERIDO : monto de la compra que no se le aplica ningun impuesto, solo positivos incluye cero
     - `tipo_recibo` : REQUERIDO : factura o nota
     - `adjunto_recibo` : REQUERIDO : el recibo de la factura o nota escaneado
 * 2 El API valida los datos: PROCESA LOS DATOS
@@ -255,7 +252,7 @@ Descripción: El actor ( no importa cual) carga un documento.
 
 ### Caso de Uso listar recibos
 
-Listar resumido las facturas o documentos cargados en el sistema segun criterios de filtrado o busqueda
+Listar resumido los recibos o documentos cargados en el sistema segun criterios de filtrado o busqueda
 
 - Actores Principales COMPRADOR, GASTOS, CONTABILIDAD
 - Actor Secundario: Base de datos, API receiptsapi
@@ -271,9 +268,9 @@ Listar resumido las facturas o documentos cargados en el sistema segun criterios
 * 1 el API recibe los parametros GET, solo llama el punto de entrada
     - `rif_agente` : OPCIONAL : rif del comprador
     - `rif_sujeto` : OPCIONAL : rif del vendedor
-    - `num_recibo` : OPCIONAL : numero de factura
+    - `num_recibo` : OPCIONAL : numero de factura o nota de recibo
     - `num_control` : OPCIONAL : numero caja o numero linea MH
-    - `fecha_factura` : OPCIONAL : fecha de la factura/nota indicada en el recibo
+    - `fecha_recibo` : OPCIONAL : fecha de la factura/nota indicada en el recibo
     - `fecha_compra` : OPCIONAL : se pone a la fecha actual (de no venir) o maximo DIASCARGA atras
     - `monto_factura` : OPCIONAL : total toda la factura, solo positivos sin cero
     - `tipo_recibo` : OPCIONAL : factura o nota
@@ -288,7 +285,7 @@ Listar resumido las facturas o documentos cargados en el sistema segun criterios
         - `rif_agente` : mostrar
         - `rif_sujeto` : mostrar si existe sino vacio
         - `fecha_compra` : mostrar, formato YYYYMMDD
-        - `monto_factura` : mostrar o 0, si cero mostrar "error" al lado
+        - `monto_recibo` : mostrar o 0, si cero mostrar "error" al lado
 
 ##### Flujos Alternativos
 
@@ -320,7 +317,7 @@ Detalle completo de un recibo o documento en el sistema ya cargado este anulado 
 ##### Condiciones y flujo
 
 * 1 el API recibe los parametros GET, solo llama el punto de entrada
-    - `cod_recibo` : REQUERIDO : id de factura YYYYMMDDHHMMSS
+    - `cod_recibo` : REQUERIDO : id de recibo YYYYMMDDHHMMSS
 
 ##### Post condiciones 
 
@@ -331,11 +328,11 @@ Detalle completo de un recibo o documento en el sistema ya cargado este anulado 
         - `cod_recibo` : mostrar : YYYYMMDDHHMMSS
         - `rif_agente` : mostrar
         - `rif_sujeto` : mostrar si existe sino vacio
-        - `num_factura` : mostrar siempre
+        - `num_recibo` : mostrar siempre
         - `num_control` : mostrar si existe sino vacio
-        - `fecha_factura` : mostrar, formato YYYYMMDD
+        - `fecha_recibo` : mostrar, formato YYYYMMDD
         - `fecha_compra` : mostrar, formato YYYYMMDD
-        - `monto_factura` : mostrar o 0, si cero mostrar "error" al lado
+        - `monto_recibo` : mostrar o 0, si cero mostrar "error" al lado
         - `monto_excento` : mostrar o 0
         - `tipo_recibo` : FACTURA/NOTA
         - `adjunto_recibo` : 
