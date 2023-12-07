@@ -1,21 +1,29 @@
 
+### FLUJO DE SISTEMA
+
+Se tiene un flujo preliminar del sistema y los casos de uso en el archivo [recibosapi.drawio](recibosapi.drawio)
 
 ### BASE DE DATOS
 
-Laravel puede crear la DB pero no es lo indicado, ya que el usuario 
-configurado solo debve tener acceso a la DB permitida, por ende este 
+configurado solo debe tener acceso a la DB permitida, por ende este 
 proyecto debe tener un usuario ya existente y una DB ya existente para 
 conectarse, esta esta definida en el archvo `.env.localhost`
-del proyecto.
+del proyecto y su diccionario de datos se provee en el archivo SQL.
 
 Dado es un sistema de storage simple, no reuse datos viejos, la
 estructura de base de datos se codifico con data types equivalentes 
 en ODBC sin problemas en la migraciones.
 
-### WEBSERVER
+Este sistema no emplea migrations, innecesario dado son pocas tablas, 
+**las migraciones son demasiado abstractas y permiten problemas de diamante** 
+resultando en diseños deficientes de base de datos **al no ser visiblemente visuales 
+estos cambios en las relaciones**.
 
-Desafortunadamente laravel es ADD por ende en lso webservers depende 
-de un dominio, en desarrollo se empleara `api.local` mientras:
+##### Diccionario de datos
+
+Este esta definido en el mismo [script de la DB recibosapi.sql](recibosapi.sql)
+
+### WEBSERVER
 
 Para que esto funcione debe tener un dns interno apuntando "api.local" a 127.0.0.1
 
