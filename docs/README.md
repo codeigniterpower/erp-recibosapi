@@ -29,7 +29,7 @@ favor refierase a la seccion [Desarrollo](#despliegue-y-desarrollo) donde se det
 ```
 rm -rf $HOME/Devel/receiptsapi && mkdir $HOME/Devel
 
-git clone --recursive https://codeberg.org/codeigniter/receiptsapi $HOME/Devel/receiptsapi
+git clone --recursive https://codeberg.org/codeigniter/erp-recibosapi $HOME/Devel/receiptsapi
 
 cd $HOME/Devel &&  git submodule foreach git checkout develop && git submodule foreach git pull
 ```
@@ -131,3 +131,5 @@ Las adiciones y la funcionalidad estan licenciadas tambien **CC-BY-SA-NC** Compa
 
 * (c) 2023 PICCORO Lenz McKAY <mckaygerhard>
 * (c) 2023 Dias Victor @diazvictor
+
+El proyecto se ha mudado al por fin madurar https://codeberg.org/codeigniter/erp-recibosapi

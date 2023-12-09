@@ -1,5 +1,7 @@
 # Erp Recibosapi
 
+REPOSITORIO MOVE: https://codeberg.org/codeigniter/erp-recibosapi
+
 ## Contenido
 
 * [Introduccion](#introduccion)
@@ -51,4 +53,6 @@ Las adiciones y la funcionalidad estan licenciadas tambien **CC-BY-SA-NC** Compa
 
 * (c) 2023 PICCORO Lenz McKAY <mckaygerhard>
 * (c) 2023 Dias Victor @diazvictor
+* (c) 2023 Tyron Lucero
 
+El proyecto se ha mudado al por fin madurar https://codeberg.org/codeigniter/erp-recibosapi
