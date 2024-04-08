@@ -7,6 +7,7 @@
 -- -----------------------------------------------------
 -- CREATE SCHEMA IF NOT EXISTS `elretenciondb` DEFAULT CHARACTER SET latin1 ;
 -- USE `elretenciondb` ;
+-- WARNING : sqlite must use https://qgqlochekone.blogspot.com/2017/03/mysql-to-sqlite-comments-error-near.html
 
 -- -----------------------------------------------------
 -- Table `apirec_recibo_adjunto`
